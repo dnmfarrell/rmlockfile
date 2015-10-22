@@ -18,9 +18,9 @@ rmlockfile - remove an orphaned lockfile when its process has finished
 
   Command line examples
   ---------------------
-  $ ./rmlockfile --process keepassx --filepath /home/user1/Documents/vault.kdb.lock
+  $ ./rmlockfile --process keepassx --filepath ~/Documents/vault.kdb.lock
 
-  $ ./rmlockfile -p keepassx -f /home/user1/Documents/vault.kdb.lock
+  $ ./rmlockfile -p keepassx -f ~/Documents/vault.kdb.lock
 
   Crontab example
   ---------------
