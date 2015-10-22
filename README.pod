@@ -16,6 +16,26 @@ rmlockfile - remove an orphaned lockfile when its process has finished
   --filepath,-f   path of the lockfile to remove if process is not running
   --help,-h       display these options
 
+  Command line examples
+  ---------------------
+  $ ./rmlockfile --process keepassx --filepath /home/user1/Documents/vault.kdb.lock
+
+  $ ./rmlockfile -p keepassx -f /home/user1/Documents/vault.kdb.lock
+
+  Crontab example
+  ---------------
+  * * * * * /home/user1/rmlockfile -p keepassx -f /home/user1/Documents/vault.kdb.lock
+
+=head1 DESCRIPTION
+
+C<rmlockfile> is a lightweight program for tidying up orphaned lockfiles after
+their process has finished. My primary use-case for this was C<keepassx>, which
+will always leave behind a lockfile if interrupted or terminated.
+
+=head1 REQUIREMENTS
+
+Perl v5.8 or higher, GNU Bash (tested on v4.3.42, Fedora 22)
+
 =head1 AUTHOR
 
 David Farrell E<copy> 2015

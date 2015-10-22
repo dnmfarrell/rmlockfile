@@ -16,13 +16,13 @@ my @process_table = `ps -e`;
 my @process_names;
 for (@process_table)
 {
-  my @row = split /\s+/, $_;
-  push @process_names, pop @row;
+  my ($pid, $tty, $time, $process)  = split /\s+/, $_;
+  push @process_names, $process;
 }
 
-exit(0) if grep(/^$process$/, @process_names) || unlink $filepath;
+exit(0) if grep(/^$process$/, @process_names);
 
-die "Unable to delete lockfile $filepath\n";
+unlink $filepath;
 
 =head1 NAME
 
@@ -37,6 +37,26 @@ rmlockfile - remove an orphaned lockfile when its process has finished
   --process,-p    process name to check is running
   --filepath,-f   path of the lockfile to remove if process is not running
   --help,-h       display these options
+
+  Command line examples
+  ---------------------
+  $ ./rmlockfile --process keepassx --filepath /home/user1/Documents/vault.kdb.lock
+
+  $ ./rmlockfile -p keepassx -f /home/user1/Documents/vault.kdb.lock
+
+  Crontab example
+  ---------------
+  * * * * * /home/user1/rmlockfile -p keepassx -f /home/user1/Documents/vault.kdb.lock
+
+=head1 DESCRIPTION
+
+C<rmlockfile> is a lightweight program for tidying up orphaned lockfiles after
+their process has finished. My primary use-case for this was keepassx, which
+will always leave behind a lockfile if interrupted or terminated.
+
+=head1 REQUIREMENTS
+
+Perl v5.8 or higher, GNU Bash (tested on v4.3.42, Fedora 22)
 
 =head1 AUTHOR
 
