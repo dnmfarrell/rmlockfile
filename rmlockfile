@@ -1,0 +1,47 @@
+#!/usr/bin/env perl
+use Getopt::Long 'HelpMessage';
+use strict;
+use warnings;
+
+GetOptions (
+  'process=s'  => \my $process,
+  'filepath=s' => \my $filepath,
+  'help=s'     => sub { HelpMessage(0) },
+) or die HelpMessage(1);
+
+HelpMessage(1) unless $process && $filepath;
+
+my @process_table = `ps -e`;
+
+my @process_names;
+for (@process_table)
+{
+  my @row = split /\s+/, $_;
+  push @process_names, pop @row;
+}
+
+exit(0) if grep(/^$process$/, @process_names) || unlink $filepath;
+
+die "Unable to delete lockfile $filepath\n";
+
+=head1 NAME
+
+rmlockfile - remove an orphaned lockfile when its process has finished
+
+=head1 SYNOPSIS
+
+  rmlockfile [options]
+
+  Options
+  -------
+  --process,-p    process name to check is running
+  --filepath,-f   path of the lockfile to remove if process is not running
+  --help,-h       display these options
+
+=head1 AUTHOR
+
+David Farrell E<copy> 2015
+
+=head1 LICENSE
+
+FreeBSD, see LICENSE

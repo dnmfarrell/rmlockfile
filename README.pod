@@ -1,0 +1,25 @@
+=pod
+
+=encoding utf8
+
+=head1 NAME
+
+rmlockfile - remove an orphaned lockfile when its process has finished
+
+=head1 SYNOPSIS
+
+  rmlockfile [options]
+
+  Options
+  -------
+  --process,-p    process name to check is running
+  --filepath,-f   path of the lockfile to remove if process is not running
+  --help,-h       display these options
+
+=head1 AUTHOR
+
+David Farrell E<copy> 2015
+
+=head1 LICENSE
+
+FreeBSD, see LICENSE
