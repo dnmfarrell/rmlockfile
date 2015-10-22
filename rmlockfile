@@ -14,10 +14,11 @@ HelpMessage(1) unless $process && $filepath;
 my @process_table = `ps -e`;
 
 my @process_names;
-for (@process_table)
+for my $row (@process_table)
 {
-  my ($pid, $tty, $time, $process)  = split /\s+/, $_;
-  push @process_names, $process;
+  $row =~ s/^\s+//;
+  my ($pid, $tty, $time, $process_name)  = split /\s+/, $row;
+  push @process_names, $process_name;
 }
 
 exit(0) if grep(/^$process$/, @process_names);
